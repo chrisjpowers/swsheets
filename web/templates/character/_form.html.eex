@@ -37,7 +37,7 @@
       <div class="col-sm-3">
         <div class="form-group">
           <label for="character[species]">Species</label>
-          <select name="character[species]" class="form-control">
+          <select name="character[species]" class="form-control" id="characterSpeciesSelect">
             <%= for {system, species} <- species_by_system do %>
               <optgroup label="<%= system %>">
                 <%= for s <- species do %>
@@ -51,11 +51,16 @@
       <div class="col-sm-3">
         <div class="form-group">
           <label for="character[career]">Career</label>
-          <select name="character[career]" class="form-control">
+          <select name="character[career]" class="form-control" id="characterCareerSelect">
+            <% if current_career = get_field(@character, :career) do %>
+              <option selected value="<%= current_career %>">
+                <%= current_career %>
+              </option>
+            <% end %>
             <%= for {system, careers} <- careers_by_system do %>
               <optgroup label="<%= system %>">
                 <%= for c <- careers do %>
-                  <option value="<%= c %>" <%= if get_field(@character, :career) == c, do: "selected" %>><%= c %></option>
+                  <option value="<%= c %>"><%= c %></option>
                 <% end %>
               </optgroup>
             <% end %>
